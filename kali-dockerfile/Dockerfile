@@ -12,8 +12,12 @@ WORKDIR "/home/shared"
   && apt-get install -y wordlists seclists dirbuster \
 # Install core utils
   && apt-get install -y iputils-ping curl nano whois 7zip \
-# Install testing utils
-  && apt-get install -y metasploit-framework sslscan sslyze ssldump nmap hydra john hashcat hash-identifier gobuster wpscan sqlmap smbmap smbclient openvas-scanner amass crackmapexec arp-scan aircrack-ng exiftool winexe \
+# Install testing tools
+  && apt-get install -y metasploit-framework nmap hydra john hashcat hash-identifier gobuster aircrack-ng crackmapexec exiftool winexe \
+# Install testing scanners
+  && apt-get install -y sslscan sslyze ssldump wpscan sqlmap smbmap smbclient openvas-scanner amass arp-scan \
+# Install management platforms
+  && apt-get install -y defectdojo gvmd \
 # Create user account
   && useradd --create-home --shell "/bin/zsh" kali && chown kali "/home/shared"
 
