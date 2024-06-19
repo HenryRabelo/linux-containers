@@ -21,7 +21,6 @@ for IMAGE in $@; do
   
   else
     exit 1
-  
   fi
   
   mkdir -p "$HOME/.docker/$CONTAINER_NAME"
