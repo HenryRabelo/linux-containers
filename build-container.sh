@@ -13,12 +13,15 @@ for IMAGE in $@; do
     CONTAINER_NAME='Kali'
     BUILD_OPTS='--no-cache --force-rm'
     RUN_OPTS='--network host --hostname tester'
-  fi
   
-  if [ $IMAGE == 'ubuntu' ]; then
+  elif [ $IMAGE == 'ubuntu' ]; then
     CONTAINER_NAME='Ubuntu'
     BUILD_OPTS='--force-rm'
     RUN_OPTS='--hostname coder'
+  
+  else
+    exit 1
+  
   fi
   
   mkdir -p "$HOME/.docker/$CONTAINER_NAME"
