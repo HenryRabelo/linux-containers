@@ -17,7 +17,7 @@ WORKDIR "/home/shared"
 # Install testing scanners
   && apt-get install -y sslscan sslyze ssldump wpscan sqlmap smbmap smbclient openvas-scanner amass arp-scan \
 # Install management platforms
-  && apt-get install -y defectdojo gvmd \
+  && apt-get install -y defectdojo gvmd bloodhound \
 # Create user account
   && useradd --create-home --shell "/bin/zsh" kali && chown kali "/home/shared"
 
