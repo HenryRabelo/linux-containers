@@ -1,23 +1,30 @@
 #!/bin/bash
-echo 'Build container cmd: ./build-container.sh kali'
-echo 'Run container cmd: run-kali'
+echo 'Available builds: kali ubuntu'
+echo 'Build container cmd ex.: ./build-container.sh kali'
+echo 'Run container cmd ex.: run-kali'
+echo '__________________________________________________'
 
 mkdir -p "$HOME/.local/bin"
 mkdir -p "$HOME/.docker"
 
-for distro in $@; do
-
-  if [ $distro == 'kali' ]; then
-    mkdir -p "$HOME/.docker/Kali"
-    ## Make sure we have a clean slate
-    docker container rm Kali && docker image rm kali
-    ## Build image from Dockerfile
-    docker build --no-cache --force-rm --tag kali "$(pwd)/kali-dockerfile/"
-    ## Create a container from built image
-    docker run --name Kali --interactive --tty --detach --network host --hostname tester --volume "$HOME/.docker/Kali:/home/shared" kali
-    ## Make alias / shell script to start created container:
-    # echo 'alias run-kali="docker start Kali && docker attach Kali"' >> "$HOME/.profile"
-    echo -e '#!/bin/sh\ndocker start Kali && docker attach Kali' > "$HOME/.local/bin/run-kali" && chmod +x "$HOME/.local/bin/run-kali"
+for IMAGE in $@; do
+  
+  if [ $IMAGE == 'kali' ]; then
+    CONTAINER_NAME='Kali'
+    BUILD_OPTS='--no-cache --force-rm'
+    RUN_OPTS='--network host --hostname tester'
   fi
+  
+  if [ $IMAGE == 'ubuntu' ]; then
+    CONTAINER_NAME='Ubuntu'
+    BUILD_OPTS='--force-rm'
+    RUN_OPTS='--hostname coder'
+  fi
+  
+  mkdir -p "$HOME/.docker/$CONTAINER_NAME"
+  docker container rm $CONTAINER_NAME && docker image rm $IMAGE
+  docker build $BUILD_OPTS --tag $IMAGE "$(pwd)/$IMAGE-dockerfile/"
+  docker run --name $CONTAINER_NAME --interactive --tty --detach $RUN_OPTS --volume "$HOME/.docker/$CONTAINER_NAME:/home/shared" $IMAGE
+  echo -e '#!/bin/sh\n'"docker start $CONTAINER_NAME && docker attach $CONTAINER_NAME" > "$HOME/.local/bin/run-$IMAGE" && chmod +x "$HOME/.local/bin/run-$IMAGE"
   
 done
