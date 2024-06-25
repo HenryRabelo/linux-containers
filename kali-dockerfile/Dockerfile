@@ -1,32 +1,32 @@
-# [Kali Dockerfile]
+## [ Kali Dockerfile ] ##
 FROM kalilinux/kali-rolling
 LABEL name="Kali Testing Environment" created-by="Henry Rabelo"
 VOLUME "/home/shared"
 WORKDIR "/home/shared"
 
 # Enable APT SecComp Sandbox
- RUN echo 'APT::Sandbox::Seccomp "true";' > '/etc/apt/apt.conf.d/40sandbox' \
+ RUN echo 'APT::Sandbox::Seccomp "true";' > '/etc/apt/apt.conf.d/40sandbox' &&\
 # System update & upgrade
-  && apt-get update  &&  apt-get full-upgrade -y \
+  apt-get update  &&  apt-get full-upgrade -y &&\
 # Install core system
-  && apt-get install -y kali-system-cli kali-system-core kali-linux-core kali-defaults \
+  apt-get install -y kali-system-cli kali-system-core kali-linux-core kali-defaults &&\
 # Install wordlists & misc.
-  && apt-get install -y wordlists seclists dirbuster screenfetch cmatrix \
+  apt-get install -y wordlists seclists dirbuster screenfetch cmatrix &&\
 # Install core utils
-  && apt-get install -y iputils-ping curl nano rlwrap whois 7zip gzip \
+  apt-get install -y iputils-ping curl nano rlwrap whois 7zip gzip &&\
 # Install testing tools
-  && apt-get install -y metasploit-framework nmap hydra john hashcat hashid gobuster aircrack-ng crackmapexec exiftool winexe \
+  apt-get install -y metasploit-framework nmap hydra john hashcat hashid gobuster aircrack-ng crackmapexec exiftool winexe &&\
 # Install testing scanners
-  && apt-get install -y sslscan sslyze ssldump wpscan sqlmap smbmap smbclient openvas-scanner amass arp-scan \
+  apt-get install -y sslscan sslyze ssldump wpscan sqlmap smbmap smbclient openvas-scanner amass arp-scan &&\
 # Install management platforms
-  && apt-get install -y defectdojo spiderfoot \
+  apt-get install -y defectdojo spiderfoot &&\
 # Setup OS preferences
-  && gzip -d /usr/share/wordlists/rockyou.txt.gz \
-  && ln -s /usr/share/wordlists /opt/ \
-  && ln -s /usr/share/seclists /opt/ \
-  && ln -s /usr/share/nmap /opt/ \
+  gzip -d /usr/share/wordlists/rockyou.txt.gz &&\
+  ln -s /usr/share/wordlists /opt/ &&\
+  ln -s /usr/share/seclists /opt/ &&\
+  ln -s /usr/share/nmap /opt/ &&\
 # Create user account
-  && useradd --create-home --shell "/bin/zsh" kali \
-  && chown kali "/home/shared"
+  useradd --create-home --shell "/bin/zsh" kali &&\
+  chown kali "/home/shared"
 
 CMD ["/bin/zsh"]
