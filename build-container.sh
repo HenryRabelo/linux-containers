@@ -24,7 +24,8 @@ for IMAGE in $@; do
   fi
   
   mkdir -p "$HOME/.docker/$CONTAINER_NAME"
-  docker container rm $CONTAINER_NAME && docker image rm $IMAGE
+  docker container stop $CONTAINER_NAME && docker container remove $CONTAINER_NAME && docker image remove $IMAGE
+  echo '__________________________________________________'
   docker build $BUILD_OPTS --tag $IMAGE "$(pwd)/$IMAGE-dockerfile/"
   docker run --name $CONTAINER_NAME --interactive --tty --detach $RUN_OPTS --volume "$HOME/.docker/$CONTAINER_NAME:/home/shared" $IMAGE
   echo -e '#!/bin/sh\n'"docker start $CONTAINER_NAME && docker attach $CONTAINER_NAME" > "$HOME/.local/bin/run-$IMAGE" && chmod +x "$HOME/.local/bin/run-$IMAGE"
