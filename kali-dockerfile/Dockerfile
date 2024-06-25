@@ -15,7 +15,7 @@ WORKDIR "/home/shared"
 # Install core utils
   && apt-get install -y iputils-ping curl nano rlwrap whois 7zip gzip \
 # Install testing tools
-  && apt-get install -y metasploit-framework nmap hydra john hashcat hash-identifier gobuster aircrack-ng crackmapexec exiftool winexe \
+  && apt-get install -y metasploit-framework nmap hydra john hashcat hashid gobuster aircrack-ng crackmapexec exiftool winexe \
 # Install testing scanners
   && apt-get install -y sslscan sslyze ssldump wpscan sqlmap smbmap smbclient openvas-scanner amass arp-scan \
 # Install management platforms
@@ -29,4 +29,4 @@ WORKDIR "/home/shared"
   && useradd --create-home --shell "/bin/zsh" kali \
   && chown kali "/home/shared"
 
-CMD "/bin/zsh"
+CMD ["/bin/zsh"]
