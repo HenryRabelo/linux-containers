@@ -13,4 +13,4 @@ WORKDIR "/home/shared"
 # Configure work directory
   && chown ubuntu "/home/shared"
 
-CMD "/bin/bash"
+CMD ["/bin/bash"]
