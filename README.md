@@ -2,6 +2,7 @@
 [![Docker Badge](https://img.shields.io/badge/Docker-1D63ED?logo=docker&logoColor=white)](https://docker.com)
 [![Kali Badge](https://img.shields.io/badge/Kali_Linux-2777FF?logo=kalilinux&logoColor=white)](https://kali.org/)
 [![Ubuntu Badge](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](https://ubuntu.com/desktop)
+[![Fedora Badge](https://img.shields.io/badge/Fedora-51A2DA?logo=fedora&logoColor=white)](https://fedoraproject.org/)
 
 A repository of Dockerfiles to be built into container environments.
 
@@ -17,13 +18,14 @@ Run container cmd ex.: run-ubuntu
 ____________________________________________________
 
 ## Make sure we have a clean slate, removes previously used containers  / images
-docker container rm Ubuntu && docker image rm ubuntu
+docker container stop Ubuntu && docker container remove Ubuntu && docker image remove ubuntu
+____________________________________________________
 
 ## Build image from Dockerfile
-docker build --force-rm --tag ubuntu "$(pwd)/ubuntu-dockerfile/"
+docker build --force-rm --tag ubuntu "$(pwd)/ubuntu-dockerfile/" &&\
 
 ## Create a container from built image
-docker run --name Ubuntu --interactive --tty --detach --hostname coder --volume "$HOME/.docker/Ubuntu:/home/shared" ubuntu
+docker run --name Ubuntu --interactive --tty --detach --hostname coder --volume "$HOME/.docker/Ubuntu:/home/shared" ubuntu &&\
 
 ## We can make either an alias or shell script to start the created container:
 # echo 'alias run-ubuntu="docker start Ubuntu && docker attach Ubuntu"' >> "$HOME/.profile"
