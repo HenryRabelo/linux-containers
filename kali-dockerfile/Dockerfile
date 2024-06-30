@@ -1,4 +1,3 @@
-## [ Kali Dockerfile ] ##
 FROM kalilinux/kali-rolling
 LABEL name="Kali Testing Environment" created-by="Henry Rabelo"
 VOLUME "/home/shared"
@@ -21,10 +20,10 @@ WORKDIR "/home/shared"
 # Install management platforms
   apt-get install -y defectdojo spiderfoot &&\
 # Setup OS preferences
-  gzip -d /usr/share/wordlists/rockyou.txt.gz &&\
-  ln -s /usr/share/wordlists /opt/ &&\
-  ln -s /usr/share/seclists /opt/ &&\
-  ln -s /usr/share/nmap /opt/ &&\
+  gzip -d "/usr/share/wordlists/rockyou.txt.gz" &&\
+  ln -s "/usr/share/wordlists" "/opt/" &&\
+  ln -s "/usr/share/seclists" "/opt/" &&\
+  ln -s "/usr/share/nmap" "/opt/" &&\
 # Create user account
   useradd --create-home --shell "/bin/zsh" kali &&\
   chown kali "/home/shared"
