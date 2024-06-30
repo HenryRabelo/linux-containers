@@ -18,6 +18,11 @@ for IMAGE in $@; do
     CONTAINER_NAME='Ubuntu'
     BUILD_OPTS='--force-rm'
     RUN_OPTS='--hostname coder'
+
+  elif [ $IMAGE == 'fedora' ]; then
+    CONTAINER_NAME='Fedora'
+    BUILD_OPTS='--force-rm'
+    RUN_OPTS='--hostname coder'
   
   else
     exit 1
@@ -26,6 +31,7 @@ for IMAGE in $@; do
   mkdir -p "$HOME/.docker/$CONTAINER_NAME"
   docker container stop $CONTAINER_NAME && docker container remove $CONTAINER_NAME && docker image remove $IMAGE
   echo '__________________________________________________'
+  
   docker build $BUILD_OPTS --tag $IMAGE "$(pwd)/$IMAGE-dockerfile/" &&\
   docker run --name $CONTAINER_NAME --interactive --tty --detach $RUN_OPTS --volume "$HOME/.docker/$CONTAINER_NAME:/home/shared" $IMAGE &&\
   echo -e '#!/bin/sh\n'"docker start $CONTAINER_NAME && docker attach $CONTAINER_NAME" > "$HOME/.local/bin/run-$IMAGE" && chmod +x "$HOME/.local/bin/run-$IMAGE"
