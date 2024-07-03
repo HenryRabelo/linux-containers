@@ -14,7 +14,7 @@ WORKDIR "/home/shared"
 # Remove sudo
   dnf remove --noautoremove -y sudo &&\
 # Install core utils
-  dnf install -y vim-default-editor zsh zsh-autosuggestions zsh-syntax-highlighting curl &&\
+  dnf install -y nano-default-editor zsh zsh-autosuggestions zsh-syntax-highlighting curl &&\
 # Setup OS preferences
   curl --output "$HOME/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
   curl --output "$HOME/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
