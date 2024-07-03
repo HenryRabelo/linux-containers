@@ -8,7 +8,7 @@ WORKDIR "/home/shared"
 # System update & upgrade
   apt-get update  &&  apt-get full-upgrade -y &&\
 # Install core utils
-  apt-get install -y opendoas &&\
+  apt-get install -y opendoas nano curl &&\
 # Blank Dockerfile, locally edited to install packages for the current project.
 #  apt-get install -y &&\
 # Configure work directory
