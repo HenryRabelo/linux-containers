@@ -14,14 +14,14 @@ WORKDIR "/home/shared"
 # Remove sudo
   dnf remove --noautoremove -y sudo &&\
 # Install core utils
-  dnf install -y vim-default-editor zsh zsh-autosuggestions zsh-syntax-highlighting wget2 &&\
+  dnf install -y vim-default-editor zsh zsh-autosuggestions zsh-syntax-highlighting curl &&\
 # Setup OS preferences
-  wget --https-only --no-hsts -O "$HOME/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
-  wget --https-only --no-hsts -O "$HOME/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
+  curl --output "$HOME/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
+  curl --output "$HOME/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
   echo -e '\nPROMPT="[%F{%(!.red.cyan)}%n@%m%F{reset} %(5~.%-2~/…/%1~.%4~)]%# "' >> "$HOME/.zshrc" &&\
 # Create user account
   useradd --create-home --shell "/bin/zsh" fedora &&\
-  cp "$HOME/.z*" "/home/fedora" &&\
+  cp "$HOME/.z*" "/home/fedora/" &&\
   chown fedora "/home/fedora/.z*" &&\
   chown fedora "/home/shared"
 
