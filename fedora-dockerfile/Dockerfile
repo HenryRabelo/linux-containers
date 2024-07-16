@@ -19,8 +19,9 @@ WORKDIR "/home/shared"
   curl --output "$HOME/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
   curl --output "$HOME/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
   echo -e '\nPROMPT="[%F{%(!.red.cyan)}%n@%m%F{reset} %(5~.%-2~/…/%1~.%4~)]%# "' >> "$HOME/.zshrc" &&\
+  echo 'permit persist :wheel' >> "/etc/doas.conf" &&\
 # Create user account
-  useradd --create-home --shell "/bin/zsh" fedora &&\
+  useradd --shell "/bin/zsh" --groups wheel --create-home fedora &&\
   cp "$HOME/.z*" "/home/fedora/" &&\
   chown fedora "/home/fedora/.z*" &&\
   chown fedora "/home/shared"
