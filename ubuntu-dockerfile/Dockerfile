@@ -11,6 +11,9 @@ WORKDIR "/home/shared"
   apt-get install -y opendoas nano curl &&\
 # Blank Dockerfile, locally edited to install packages for the current project.
 #  apt-get install -y &&\
+# Setup OS Preferences
+  ln -s /bin/doas /usr/local/bin/sudo &&\
+  echo -e '#Allow "sudo" group:\npermit :sudo\npermit persist :sudo' >> "/etc/doas.conf" &&\
 # Configure work directory
   chown ubuntu "/home/shared"
 
