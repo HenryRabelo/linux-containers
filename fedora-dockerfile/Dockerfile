@@ -23,9 +23,9 @@ WORKDIR "/home/shared"
   chmod 600 "/etc/doas.conf" &&\
 # Create user account
   useradd --shell "/bin/zsh" --groups wheel --create-home fedora &&\
-  passwd --expire fedora &&\
-  cp "$HOME/.z*" "/home/fedora/" &&\
-  chown fedora "/home/fedora/.z*" &&\
+  passwd --delete --expire fedora &&\
+  cp $HOME/.z* "/home/fedora/" &&\
+  chown fedora /home/fedora/.z* &&\
   chown fedora "/home/shared" &&\
   usermod --shell "/sbin/nologin" --lock root
 
