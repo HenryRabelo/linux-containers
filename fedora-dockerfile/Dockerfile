@@ -20,8 +20,10 @@ WORKDIR "/home/shared"
   curl --output "$HOME/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
   echo -e '\nPROMPT="[%F{%(!.red.cyan)}%n@%m%F{reset} %(5~.%-2~/…/%1~.%4~)]%# "' >> "$HOME/.zshrc" &&\
   echo 'permit persist :wheel' >> "/etc/doas.conf" &&\
+  chmod 600 "/etc/doas.conf" &&\
 # Create user account
   useradd --shell "/bin/zsh" --groups wheel --create-home fedora &&\
+  passwd --expire fedora &&\
   cp "$HOME/.z*" "/home/fedora/" &&\
   chown fedora "/home/fedora/.z*" &&\
   chown fedora "/home/shared"
