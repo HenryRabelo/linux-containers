@@ -1,5 +1,5 @@
 #!/bin/bash
-echo 'Available builds: kali ubuntu'
+echo 'Available builds: kali ubuntu fedora'
 echo 'Build container cmd ex.: ./build-container.sh kali'
 echo 'Run container cmd ex.: run-kali'
 echo '__________________________________________________'
@@ -12,17 +12,17 @@ for IMAGE in $@; do
   if [ $IMAGE == 'kali' ]; then
     CONTAINER_NAME='Kali'
     BUILD_OPTS='--no-cache --force-rm'
-    RUN_OPTS='--network host --hostname tester'
+    RUN_OPTS='--network host --hostname tester --user kali'
   
   elif [ $IMAGE == 'ubuntu' ]; then
     CONTAINER_NAME='Ubuntu'
     BUILD_OPTS='--force-rm'
-    RUN_OPTS='--hostname coder'
+    RUN_OPTS='--hostname coder --user ubuntu'
 
   elif [ $IMAGE == 'fedora' ]; then
     CONTAINER_NAME='Fedora'
     BUILD_OPTS='--force-rm'
-    RUN_OPTS='--hostname coder'
+    RUN_OPTS='--hostname coder --user fedora'
   
   else
     exit 1
