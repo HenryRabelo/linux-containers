@@ -26,6 +26,7 @@ WORKDIR "/home/shared"
   passwd --expire fedora &&\
   cp "$HOME/.z*" "/home/fedora/" &&\
   chown fedora "/home/fedora/.z*" &&\
-  chown fedora "/home/shared"
+  chown fedora "/home/shared" &&\
+  usermod --shell "/sbin/nologin" --lock root
 
 CMD ["/bin/zsh"]
