@@ -12,9 +12,9 @@ WORKDIR "/home/shared"
 # Install wordlists & misc.
   apt-get install -y wordlists seclists dirbuster screenfetch cmatrix &&\
 # Install core utils
-  apt-get install -y iputils-ping curl nano rlwrap whois 7zip gzip &&\
+  apt-get install -y iputils-ping wget curl vim sudo rlwrap whois 7zip gzip &&\
 # Install testing tools
-  apt-get install -y metasploit-framework nmap hydra john hashcat hashid gobuster aircrack-ng crackmapexec exiftool winexe &&\
+  apt-get install -y metasploit-framework nmap hydra john hashcat hashid gobuster adb aircrack-ng crackmapexec exiftool winexe &&\
 # Install testing scanners
   apt-get install -y sslscan sslyze ssldump wpscan sqlmap smbmap smbclient openvas-scanner amass arp-scan &&\
 # Install management platforms
@@ -25,7 +25,7 @@ WORKDIR "/home/shared"
   ln -s "/usr/share/seclists" "/opt/" &&\
   ln -s "/usr/share/nmap" "/opt/" &&\
 # Create user account
-  useradd --create-home --shell "/bin/zsh" kali &&\
+  useradd --shell "/bin/zsh" --groups sudo --create-home kali &&\
   chown kali "/home/shared"
 
 CMD ["/bin/zsh"]
