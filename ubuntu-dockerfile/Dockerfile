@@ -13,9 +13,11 @@ WORKDIR "/home/shared"
 #  apt-get install -y &&\
 # Setup OS Preferences
   ln -s /bin/doas /usr/local/bin/sudo &&\
-  echo -e '#Allow "sudo" group:\npermit :sudo\npermit persist :sudo' > "/etc/doas.conf" &&\
+  echo '#Allow "sudo" group:\npermit :sudo\npermit persist :sudo' > "/etc/doas.conf" &&\
   chmod 600 "/etc/doas.conf" &&\
 # Configure work directory
-  chown ubuntu "/home/shared"
+  passwd --delete --expire ubuntu &&\
+  chown ubuntu "/home/shared" &&\
+  usermod --shell "/sbin/nologin" --lock root
 
 CMD ["/bin/bash"]
