@@ -26,6 +26,8 @@ WORKDIR "/home/shared"
   ln -s "/usr/share/nmap" "/opt/" &&\
 # Create user account
   useradd --shell "/bin/zsh" --groups sudo --create-home kali &&\
-  chown kali "/home/shared"
+  passwd --expire kali &&\
+  chown kali "/home/shared" &&\
+  usermod --shell "/sbin/nologin" --lock root
 
 CMD ["/bin/zsh"]
