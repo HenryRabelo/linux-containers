@@ -25,7 +25,7 @@ ____________________________________________________
 docker build --force-rm --tag ubuntu "$(pwd)/ubuntu-dockerfile/" &&\
 
 ## Create a container from built image
-docker run --name Ubuntu --interactive --tty --detach --hostname coder --volume "$HOME/.docker/Ubuntu:/home/shared" ubuntu &&\
+docker run --name Ubuntu --interactive --tty --detach --hostname coder --user ubuntu --volume "$HOME/.docker/Ubuntu:/home/shared" ubuntu &&\
 
 ## We can make either an alias or shell script to start the created container:
 # echo 'alias run-ubuntu="docker start Ubuntu && docker attach Ubuntu"' >> "$HOME/.profile"
