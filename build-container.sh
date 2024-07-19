@@ -7,33 +7,37 @@ echo '__________________________________________________'
 mkdir -p "$HOME/.local/bin"
 mkdir -p "$HOME/.docker"
 
-for IMAGE in $@; do
+for DISTRO in $@; do
   
-  if [ $IMAGE == 'kali' ]; then
-    CONTAINER_NAME='Kali'
+  if [ $DISTRO == 'kali' ]; then
+    IMAGE='kalilinux/kali-rolling'
+    CONTAINER='Kali'
     BUILD_OPTS='--no-cache --force-rm'
-    RUN_OPTS='--network host --hostname tester --user kali'
+    RUN_OPTS="--network host --hostname tester --user $DISTRO"
   
-  elif [ $IMAGE == 'ubuntu' ]; then
-    CONTAINER_NAME='Ubuntu'
+  elif [ $DISTRO == 'ubuntu' ]; then
+    IMAGE="$DISTRO"
+    CONTAINER='Ubuntu'
     BUILD_OPTS='--force-rm'
-    RUN_OPTS='--hostname coder --user ubuntu'
+    RUN_OPTS="--hostname coder --user $DISTRO"
 
-  elif [ $IMAGE == 'fedora' ]; then
-    CONTAINER_NAME='Fedora'
+  elif [ $DISTRO == 'fedora' ]; then
+    IMAGE="$DISTRO"
+    CONTAINER='Fedora'
     BUILD_OPTS='--force-rm'
-    RUN_OPTS='--hostname coder --user fedora'
+    RUN_OPTS="--hostname coder --user $DISTRO"
   
   else
     exit 1
   fi
   
-  mkdir -p "$HOME/.docker/$CONTAINER_NAME"
-  docker container stop $CONTAINER_NAME && docker container remove $CONTAINER_NAME && docker image remove $IMAGE
+  mkdir -p "$HOME/.docker/$CONTAINER"
+  docker container stop $CONTAINER && docker container remove $CONTAINER && docker image remove $DISTRO-build
   echo '__________________________________________________'
-  
-  docker build $BUILD_OPTS --tag $IMAGE "$(pwd)/$IMAGE-dockerfile/" &&\
-  docker run --name $CONTAINER_NAME --interactive --tty --detach $RUN_OPTS --volume "$HOME/.docker/$CONTAINER_NAME:/home/shared" $IMAGE &&\
-  echo -e '#!/bin/sh\n'"docker start $CONTAINER_NAME && docker attach $CONTAINER_NAME" > "$HOME/.local/bin/run-$IMAGE" && chmod +x "$HOME/.local/bin/run-$IMAGE"
+
+  docker pull $IMAGE &&\
+  docker build $BUILD_OPTS --tag $DISTRO-build "$(pwd)/$DISTRO-dockerfile/" &&\
+  docker create --name $CONTAINER --interactive --tty $RUN_OPTS --volume "$HOME/.docker/$CONTAINER:/home/shared" $DISTRO-build &&\
+  echo -e '#!/bin/sh\n'"docker start $CONTAINER && docker attach $CONTAINER" > "$HOME/.local/bin/run-$DISTRO" && chmod +x "$HOME/.local/bin/run-$DISTRO"
   
 done
