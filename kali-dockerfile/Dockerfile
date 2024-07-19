@@ -7,27 +7,38 @@ WORKDIR "/home/shared"
  RUN echo 'APT::Sandbox::Seccomp "true";' > '/etc/apt/apt.conf.d/40sandbox' &&\
 # System update & upgrade
   apt-get update  &&  apt-get full-upgrade -y &&\
+# Install core APT utils
+  apt-get install -y dialog apt-utils apt-transport-https &&\
 # Install core system
-  apt-get install -y kali-system-cli kali-system-core kali-linux-core kali-defaults &&\
-# Install wordlists & misc.
-  apt-get install -y wordlists seclists dirbuster screenfetch cmatrix &&\
+  apt-get install --no-install-recommends -y kali-system-core kali-linux-core &&\
+# Install base system
+  apt-get install -y kali-system-cli kali-defaults &&\
 # Install core utils
   apt-get install -y iputils-ping wget curl vim sudo rlwrap whois 7zip gzip &&\
+# Install wordlists & misc.
+  apt-get install --no-install-recommends -y wordlists seclists screenfetch cmatrix &&\
+# Context-dependant tools
+#  apt-get install -y aircrack-ng &&\
 # Install testing tools
-  apt-get install -y metasploit-framework nmap hydra john hashcat hashid gobuster adb aircrack-ng crackmapexec exiftool winexe &&\
+  apt-get install -y hashid gobuster adb exiftool &&\
+# Install recommend-heavy testing tools
+  apt-get install --no-install-recommends -y metasploit-framework hydra hashcat john smbclient winexe &&\
 # Install testing scanners
-  apt-get install -y sslscan sslyze ssldump wpscan sqlmap smbmap smbclient openvas-scanner amass arp-scan &&\
+  apt-get install -y sslscan sslyze wpscan sqlmap smbmap amass &&\
+# Install recommend-heavy testing scanners
+  apt-get install --no-install-recommends -y nmap openvas-scanner ssldump arp-scan &&\
 # Install management platforms
-  apt-get install -y defectdojo spiderfoot &&\
+  apt-get install --no-install-recommends -y defectdojo spiderfoot &&\
 # Setup OS preferences
   gzip -d "/usr/share/wordlists/rockyou.txt.gz" &&\
   ln -s "/usr/share/wordlists" "/opt/" &&\
   ln -s "/usr/share/seclists" "/opt/" &&\
   ln -s "/usr/share/nmap" "/opt/" &&\
+  ln -s "/usr/share/metasploit-framework" "/opt/" &&\
 # Create user account
   useradd --shell "/bin/zsh" --groups sudo --create-home kali &&\
-  passwd --expire kali &&\
+  passwd --delete --expire kali &&\
   chown kali "/home/shared" &&\
-  usermod --shell "/sbin/nologin" --lock root
+  usermod --lock root
 
 CMD ["/bin/zsh"]
