@@ -15,8 +15,10 @@ WORKDIR "/home/shared"
   dnf remove --noautoremove -y sudo &&\
 # Install core utils
   dnf install -y nano-default-editor zsh curl &&\
+# Install plugins
+  dnf install -y zsh-autosuggestions zsh-syntax-highlighting &&\
 # Install misc.
-  dnf install -y zsh-autosuggestions zsh-syntax-highlighting cracklib-dicts &&\
+  dnf install -y man cracklib-dicts &&\
 # Setup OS preferences
   curl --output "/root/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
   curl --output "/root/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
@@ -26,7 +28,7 @@ WORKDIR "/home/shared"
 # Create user account
   useradd --shell "/bin/zsh" --groups wheel --create-home fedora &&\
   passwd --delete --expire fedora &&\
-  cp /root/.z* "/home/fedora/" &&\
+  cp /root/.z* /home/fedora/ &&\
   chown fedora /home/fedora/.z* &&\
   chown fedora "/home/shared" &&\
   usermod --shell "/sbin/nologin" --lock root
