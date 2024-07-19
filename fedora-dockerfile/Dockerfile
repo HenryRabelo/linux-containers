@@ -14,17 +14,19 @@ WORKDIR "/home/shared"
 # Remove sudo
   dnf remove --noautoremove -y sudo &&\
 # Install core utils
-  dnf install -y nano-default-editor zsh zsh-autosuggestions zsh-syntax-highlighting curl &&\
+  dnf install -y nano-default-editor zsh curl &&\
+# Install misc.
+  dnf install -y zsh-autosuggestions zsh-syntax-highlighting cracklib-dicts &&\
 # Setup OS preferences
-  curl --output "$HOME/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
-  curl --output "$HOME/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
-  echo -e '\nPROMPT="[%F{%(!.red.cyan)}%n@%m%F{reset} %(5~.%-2~/…/%1~.%4~)]%# "' >> "$HOME/.zshrc" &&\
+  curl --output "/root/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
+  curl --output "/root/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
+  echo -e '\nPROMPT="[%F{%(!.red.cyan)}%n@%m%F{reset} %(5~.%-2~/…/%1~.%4~)]%# "' >> "/root/.zshrc" &&\
   echo 'permit persist :wheel' >> "/etc/doas.conf" &&\
   chmod 600 "/etc/doas.conf" &&\
 # Create user account
   useradd --shell "/bin/zsh" --groups wheel --create-home fedora &&\
   passwd --delete --expire fedora &&\
-  cp $HOME/.z* "/home/fedora/" &&\
+  cp /root/.z* "/home/fedora/" &&\
   chown fedora /home/fedora/.z* &&\
   chown fedora "/home/shared" &&\
   usermod --shell "/sbin/nologin" --lock root
