@@ -3,6 +3,7 @@
 [![Kali Badge](https://img.shields.io/badge/Kali_Linux-2777FF?logo=kalilinux&logoColor=white)](https://kali.org/)
 [![Ubuntu Badge](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](https://ubuntu.com/desktop)
 [![Fedora Badge](https://img.shields.io/badge/Fedora-51A2DA?logo=fedora&logoColor=white)](https://fedoraproject.org/)
+[![openSUSE Badge](https://img.shields.io/badge/openSUSE-73BA25?logo=opensuse&logoColor=white)](https://www.opensuse.org/)
 
 A repository of Dockerfiles to be built into container environments.
 
