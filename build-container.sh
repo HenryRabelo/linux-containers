@@ -1,5 +1,5 @@
 #!/bin/bash
-echo 'Available builds: kali ubuntu fedora'
+echo 'Available builds: kali ubuntu fedora opensuse'
 echo 'Build container cmd ex.: ./build-container.sh kali'
 echo 'Run container cmd ex.: run-kali'
 echo '__________________________________________________'
@@ -20,10 +20,16 @@ for DISTRO in $@; do
     CONTAINER='Ubuntu'
     BUILD_OPTS='--force-rm'
     RUN_OPTS="--hostname coder --user $DISTRO"
-
+  
   elif [ $DISTRO == 'fedora' ]; then
     IMAGE="$DISTRO"
     CONTAINER='Fedora'
+    BUILD_OPTS='--force-rm'
+    RUN_OPTS="--hostname coder --user $DISTRO"
+  
+  elif [ $DISTRO == 'opensuse' ]; then
+    IMAGE='opensuse/tumbleweed'
+    CONTAINER='openSUSE'
     BUILD_OPTS='--force-rm'
     RUN_OPTS="--hostname coder --user $DISTRO"
   
@@ -34,7 +40,7 @@ for DISTRO in $@; do
   mkdir -p "$HOME/.docker/$CONTAINER"
   docker container stop $CONTAINER && docker container remove $CONTAINER && docker image remove $DISTRO-build
   echo '__________________________________________________'
-
+  
   docker pull $IMAGE &&\
   docker build $BUILD_OPTS --tag $DISTRO-build "$(pwd)/$DISTRO-dockerfile/" &&\
   docker create --name $CONTAINER --interactive --tty $RUN_OPTS --volume "$HOME/.docker/$CONTAINER:/home/shared" $DISTRO-build &&\
