@@ -34,6 +34,12 @@ for DISTRO in $@; do
     RUN_OPTS="--hostname coder --user $DISTRO"
   
   else
+    echo 'Invalid input. Verify your spelling or the current available builds.'
+    exit 1
+  fi
+  
+  if [ ! -f "$(pwd)/$DISTRO-dockerfile/Dockerfile" ]; then
+    echo 'Dockerfile not reachable! Make sure to run this script from its root directory.'
     exit 1
   fi
   
