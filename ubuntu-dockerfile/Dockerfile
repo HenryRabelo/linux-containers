@@ -7,8 +7,10 @@ WORKDIR "/home/shared"
  RUN echo 'APT::Sandbox::Seccomp "true";' > '/etc/apt/apt.conf.d/40sandbox' &&\
 # System update & upgrade
   apt-get update  &&  apt-get full-upgrade -y &&\
+# Install core APT utils
+  apt-get install -y dialog apt-utils apt-transport-https &&\
 # Install core utils
-  apt-get install -y opendoas nano curl &&\
+  apt-get install -y opendoas nano curl less man-db &&\
 # Blank Dockerfile, locally edited to install packages for the current project.
 #  apt-get install -y &&\
 # Setup OS Preferences
