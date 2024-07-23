@@ -7,11 +7,32 @@
 
 A repository of Dockerfiles to be built into container environments.
 
-Some configurations are altered before building the image, depending on what is necessary.
+Some Dockerfile configurations are altered locally before building the image, depending on what is necessary.
 
+### Introduction
+This is a personal repository of Dockerfiles, made to quickly configure container environments, which are meant to be used interactively. It also demonstrates how to create & use Dockerfiles and the main docker commands, which are used in the shell script at the root directory.
+
+### How to Run it
+Simply give execution permissions & run the shell script located at the root directory with the desired distros as argument.
+
+The script will pull the latest official image of the given distros and build the environment automatically. It will also create a local shell script as a command to easily run the container. Instructions:
+
+```sh
+cd linux-containers
+chmod +x $(pwd)/build-container.sh
+$(pwd)/build-container.sh ubuntu
+run-ubuntu
+```
+
+### How to Use it
+The containers are to be used interactively, as a... _contained_ <sub>(heh)</sub> environment for development, as a pocket distro.
+
+When entering a container, a local user with elevation privileges will be available. For privileged actions, it will be necessary to set a password after first accessing the environment. The root account is completely locked away and inaccessible.
+
+After setting the password, use normally as one would with any distro.
 
 ##
-###### Shell script step-by-step example:
+###### Script breakdown:
 ```
 Available builds: kali ubuntu
 Build container cmd ex.: ./build-container.sh ubuntu
