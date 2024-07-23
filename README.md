@@ -31,6 +31,20 @@ When entering a container, a local user with elevation privileges will be availa
 
 After setting the password, use normally as one would with any distro.
 
+<div align="center">
+  
+  <img src="assets/images/Ubuntu.png" alt="Client.py on Terminal" width="400"/>
+  <img src="assets/images/Fedora.png" alt="Server.py on Terminal" width="400"/>
+  
+</div>
+
+<div align="center">
+  
+  <img src="assets/images/Kali.png" alt="Client.py on Terminal" width="400"/>
+  <img src="assets/images/openSUSE.png" alt="Server.py on Terminal" width="400"/>
+  
+</div>
+
 ##
 ###### Script breakdown:
 ```
