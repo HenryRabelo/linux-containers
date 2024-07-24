@@ -53,7 +53,7 @@ After setting the password, use normally as one would with any distro.
 
 #
 ###### Script breakdown:
-```
+```sh
 Available builds: kali ubuntu
 Build container cmd ex.: ./build-container.sh ubuntu
 Run container cmd ex.: run-ubuntu
