@@ -1,16 +1,22 @@
+<div align="center">
+
 # Linux Containers (Dockerfiles)
+### A repository of Dockerfiles to be built into container environments.
 [![Docker Badge](https://img.shields.io/badge/Docker-1D63ED?logo=docker&logoColor=white)](https://docker.com)
 [![Kali Badge](https://img.shields.io/badge/Kali_Linux-2777FF?logo=kalilinux&logoColor=white)](https://kali.org/)
 [![Ubuntu Badge](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](https://ubuntu.com/desktop)
 [![Fedora Badge](https://img.shields.io/badge/Fedora-51A2DA?logo=fedora&logoColor=white)](https://fedoraproject.org/)
 [![openSUSE Badge](https://img.shields.io/badge/openSUSE-73BA25?logo=opensuse&logoColor=white)](https://www.opensuse.org/)
+#
 
-A repository of Dockerfiles to be built into container environments.
+[Intro](#introduction) • [Run it](#how-to-run-it) • [Use it](#how-to-use-it) • [Script Breakdown](#script-breakdown)
 
-Some Dockerfile configurations are altered locally before building the image, depending on what is necessary.
+</div>
 
 ### Introduction
 This is a personal repository of Dockerfiles, made to quickly configure container environments, which are meant to be used interactively. It also demonstrates how to create & use Dockerfiles and the main docker commands, which are used in the shell script at the root directory.
+
+Some Dockerfile configurations are altered locally before building the image, depending on what is necessary.
 
 ### How to Run it
 Simply give execution permissions & run the shell script located at the root directory with the desired distros as argument.
@@ -19,8 +25,10 @@ The script will pull the latest official image of the given distros and build th
 
 ```sh
 cd linux-containers
+
 chmod +x $(pwd)/build-container.sh
 $(pwd)/build-container.sh ubuntu
+
 run-ubuntu
 ```
 
@@ -43,7 +51,7 @@ After setting the password, use normally as one would with any distro.
   </div>
 </div>
 
-##
+#
 ###### Script breakdown:
 ```
 Available builds: kali ubuntu
@@ -68,5 +76,10 @@ docker create --name Ubuntu --interactive --tty --hostname coder --user ubuntu -
 # echo 'alias run-ubuntu="docker start Ubuntu && docker attach Ubuntu"' >> "$HOME/.profile"
 echo -e '#!/bin/sh\n'"docker start Ubuntu && docker attach Ubuntu" > "$HOME/.local/bin/run-ubuntu" && chmod +x "$HOME/.local/bin/run-ubuntu"
 ```
+#
+
+<div align="center">
 
 [![Back to the Top Badge](https://custom-icon-badges.demolab.com/badge/Back_to_the_Top-171515?logo=chevron-up)](#linux-containers-dockerfiles)
+
+</div>
