@@ -9,7 +9,10 @@
 [![openSUSE Badge](https://img.shields.io/badge/openSUSE-73BA25?logo=opensuse&logoColor=white)](https://www.opensuse.org/)
 #
 
-[Intro](#introduction) • [Run it](#how-to-run-it) • [Use it](#how-to-use-it) • [Script Breakdown](#script-breakdown)
+[![Intro Badge](https://img.shields.io/badge/Intro-151515)](#introduction) <sup> **•** </sup>
+[![Intro Badge](https://img.shields.io/badge/Run_it-151515)](#how-to-run-it) <sup> **•** </sup>
+[![Intro Badge](https://img.shields.io/badge/Use_it-151515)](#how-to-use-it) <sup> **•** </sup>
+[![Intro Badge](https://img.shields.io/badge/Script_Breakdown-151515)](#script-breakdown)
 
 </div>
 
@@ -80,6 +83,6 @@ echo -e '#!/bin/sh\n'"docker start Ubuntu && docker attach Ubuntu" > "$HOME/.loc
 
 <div align="center">
 
-[![Back to the Top Badge](https://custom-icon-badges.demolab.com/badge/Back_to_the_Top-171515?logo=chevron-up)](#linux-containers-dockerfiles)
+[![Back to the Top Badge](https://custom-icon-badges.demolab.com/badge/Back_to_the_Top-151515?logo=chevron-up)](#linux-containers-dockerfiles)
 
 </div>
