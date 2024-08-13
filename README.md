@@ -36,7 +36,7 @@ run-ubuntu
 ```
 
 ### How to Use it
-The containers are to be used interactively, as a... _contained_ <sub>(heh)</sub> environment for development, as a pocket distro.
+The containers are to be used interactively, as a... _contained_ <sub> (heh) </sub> environment for development, as a pocket distro.
 
 When entering a container, a local user with elevation privileges will be available. For privileged actions, it will be necessary to set a password after first accessing the environment. The root account is completely locked away and inaccessible.
 
