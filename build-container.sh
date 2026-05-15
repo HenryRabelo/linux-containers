@@ -57,8 +57,8 @@ Create() {
     
     docker pull "$IMAGE:latest" &&\
     docker build "$BUILD_OPTS" --tag "$DISTRO-build" "$(pwd)/$DISTRO-dockerfile/" &&\
-    docker create --name "$CONTAINER" --interactive --tty "$RUN_OPTS" --volume "$HOME/.docker/$CONTAINER:/home/shared" "$DISTRO-build" &&\
-    echo -e '#!/bin/sh\n'"docker start $CONTAINER && docker attach $CONTAINER" > "$HOME/.local/bin/run-$DISTRO" && chmod +x "$HOME/.local/bin/run-$DISTRO"
+    eval docker create --name "$CONTAINER" --interactive --tty "$RUN_OPTS" --volume "$HOME/.docker/$CONTAINER:/home/shared" "$DISTRO-build" &&\
+    printf "%b" '#!/bin/bash''\n''export DOCKER_HOST=unix:///var/run/docker.sock''\n'"docker start $CONTAINER && docker attach $CONTAINER"'\n' > "$HOME/.local/bin/run-$DISTRO" && chmod +x "$HOME/.local/bin/run-$DISTRO"
     
   done
 }
