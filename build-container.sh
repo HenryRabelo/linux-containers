@@ -64,9 +64,7 @@ Create() {
     RSCRIPT="$(printf "%b\n" '#!/bin/bash''\n''export DOCKER_HOST=unix:///var/run/docker.sock''\n'"docker start $CONTAINER && docker attach $CONTAINER")"
     
     if [ ! "$RSCRIPT" = "$(cat "$HOME/.local/bin/run-$DISTRO")" ]; then
-      echo 'writing rscript'
-      echo "$RSCRIPT" > "$HOME/.local/bin/run-$DISTRO"
-      chmod +x "$HOME/.local/bin/run-$DISTRO"
+      echo "$RSCRIPT" > "$HOME/.local/bin/run-$DISTRO" && chmod +x "$HOME/.local/bin/run-$DISTRO"
     fi
     
   done
