@@ -6,6 +6,7 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 Create() {
   echo 'Available builds: ubuntu fedora opensuse kali'
   echo 'Build container cmd ex.: ./build-container.sh ubuntu'
+  echo 'Remove builds cmd ex.: ./build-container.sh --clean ubuntu'
   echo 'Run container cmd ex.: run-ubuntu'
   echo '__________________________________________________'
   
@@ -16,7 +17,10 @@ Create() {
   
     local IMAGE CONTAINER BUILD_OPTS RUN_OPTS RSCRIPT
     
-    if [ "$DISTRO" = 'ubuntu' ]; then
+    if [ "$1" = "$DISTRO" ] && [ "$1" = '--clean' ]; then
+      continue
+    
+    elif [ "$DISTRO" = 'ubuntu' ]; then
       IMAGE="$DISTRO"
       CONTAINER='Ubuntu'
       BUILD_OPTS='--force-rm'
@@ -41,7 +45,7 @@ Create() {
       RUN_OPTS="--network host --hostname tester --user $DISTRO"
     
     else
-      echo 'Invalid input. Verify your spelling or the current available builds.'
+      echo 'Invalid input. Verify the spelling or the current available builds.'
       exit 1
     fi
     
@@ -54,6 +58,10 @@ Create() {
     
     if [ ! -z "$(docker ps -a -q --filter "name=$CONTAINER")" ]; then
       docker container stop "$CONTAINER" && docker container remove "$CONTAINER" && docker image remove "$DISTRO-build"
+      if [ "$1" = '--clean' ]; then
+        echo 'Cleanup complete.'
+        exit 0
+      fi
       echo '__________________________________________________'
     fi
     
