@@ -57,23 +57,23 @@ After setting the password, use normally as one would with any distro.
 #
 ###### Script breakdown:
 ```sh
-Available builds: kali ubuntu
+Available builds: ubuntu fedora opensuse kali
 Build container cmd ex.: ./build-container.sh ubuntu
 Run container cmd ex.: run-ubuntu
 ____________________________________________________
 
 ## Make sure we have a clean slate, removes previously used containers  / images
-docker container stop Ubuntu && docker container remove Ubuntu && docker image remove ubuntu-build
+docker container stop "Ubuntu" && docker container remove "Ubuntu" && docker image remove "ubuntu-build"
 ____________________________________________________
 
-# Always pull latest base image
-docker pull ubuntu &&\
+# Always check for latest base image
+docker pull "ubuntu:latest" &&\
 
 ## Build image from Dockerfile
-docker build --force-rm --tag ubuntu-build "$(pwd)/ubuntu-dockerfile/" &&\
+docker build "--force-rm" --tag "ubuntu-build" "$(pwd)/ubuntu-dockerfile/" &&\
 
 ## Create a container from built image
-docker create --name Ubuntu --interactive --tty --hostname coder --user ubuntu --volume "$HOME/.docker/Ubuntu:/home/shared" ubuntu-build &&\
+docker create --name "Ubuntu" --interactive --tty "--hostname coder --user ubuntu" --volume "$HOME/.docker/Ubuntu:/home/shared" "ubuntu-build" &&\
 
 ## We can make either an alias or shell script to start the created container:
 # echo 'alias run-ubuntu="docker start Ubuntu && docker attach Ubuntu"' >> "$HOME/.profile"
