@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Makes sure docker points to the right socket
+export DOCKER_HOST=unix:///var/run/docker.sock
+
 Create() {
   echo 'Available builds: ubuntu fedora opensuse kali'
   echo 'Build container cmd ex.: ./build-container.sh ubuntu'
