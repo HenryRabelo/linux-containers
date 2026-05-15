@@ -14,7 +14,7 @@ Create() {
   
   for DISTRO in "$@"; do
   
-    local IMAGE CONTAINER BUILD_OPTS RUN_OPTS
+    local IMAGE CONTAINER BUILD_OPTS RUN_OPTS RSCRIPT
     
     if [ "$DISTRO" = 'ubuntu' ]; then
       IMAGE="$DISTRO"
@@ -52,13 +52,22 @@ Create() {
     
     mkdir -p "$HOME/.docker/$CONTAINER"
     
-    docker container stop "$CONTAINER" && docker container remove "$CONTAINER" && docker image remove "$DISTRO-build"
-    echo '__________________________________________________'
+    if [ ! -z "$(docker ps -a -q --filter "name=$CONTAINER")" ]; then
+      docker container stop "$CONTAINER" && docker container remove "$CONTAINER" && docker image remove "$DISTRO-build"
+      echo '__________________________________________________'
+    fi
     
     docker pull "$IMAGE:latest" &&\
     docker build "$BUILD_OPTS" --tag "$DISTRO-build" "$(pwd)/$DISTRO-dockerfile/" &&\
-    eval docker create --name "$CONTAINER" --interactive --tty "$RUN_OPTS" --volume "$HOME/.docker/$CONTAINER:/home/shared" "$DISTRO-build" &&\
-    printf "%b" '#!/bin/bash''\n''export DOCKER_HOST=unix:///var/run/docker.sock''\n'"docker start $CONTAINER && docker attach $CONTAINER"'\n' > "$HOME/.local/bin/run-$DISTRO" && chmod +x "$HOME/.local/bin/run-$DISTRO"
+    eval docker create --name "$CONTAINER" --interactive --tty "$RUN_OPTS" --volume "$HOME/.docker/$CONTAINER:/home/shared" "$DISTRO-build"
+    
+    RSCRIPT="$(printf "%b\n" '#!/bin/bash''\n''export DOCKER_HOST=unix:///var/run/docker.sock''\n'"docker start $CONTAINER && docker attach $CONTAINER")"
+    
+    if [ ! "$RSCRIPT" = "$(cat "$HOME/.local/bin/run-$DISTRO")" ]; then
+      echo 'writing rscript'
+      echo "$RSCRIPT" > "$HOME/.local/bin/run-$DISTRO"
+      chmod +x "$HOME/.local/bin/run-$DISTRO"
+    fi
     
   done
 }
