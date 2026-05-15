@@ -11,7 +11,7 @@ WORKDIR "/home/shared"
 # Install core APT utils
   apt-get install -y dialog apt-utils apt-transport-https &&\
 # Install core utils
-  apt-get install -y zsh nano curl less man-db &&\
+  apt-get install -y zsh sudo-rs nano curl less man-db &&\
 # Install plugins
   apt-get install -y zsh-autosuggestions zsh-syntax-highlighting &&\
 # Blank space, edit to install packages relevant for the current project.
@@ -19,7 +19,7 @@ WORKDIR "/home/shared"
 # Setup OS preferences
   curl --output "/root/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
   curl --output "/root/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
-  printf "%b" '\n''PROMPT="${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(!.red.green)}%n@%m%b%F{%(!.green.cyan)}-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(!.green.cyan)}]%F{reset}%# "''\n' >> "/root/.zshrc" &&\
+  printf "\n%b\n" 'PROMPT="${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(!.red.green)}%n@%m%b%F{%(!.green.cyan)}-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(!.green.cyan)}]%F{reset}%# "' >> "/root/.zshrc" &&\
 # Configure work directory
   usermod --shell "/bin/zsh" ubuntu &&\
   passwd --delete --expire ubuntu &&\
