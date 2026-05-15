@@ -10,16 +10,21 @@ WORKDIR "/home/shared"
 # Install core APT utils
   apt-get install -y dialog apt-utils apt-transport-https &&\
 # Install core utils
-  apt-get install -y opendoas nano curl less man-db &&\
-# Blank Dockerfile, locally edited to install packages for the current project.
+  apt-get install -y zsh nano curl less man-db &&\
+# Install plugins
+  apt-get install -y zsh-autosuggestions zsh-syntax-highlighting &&\
+# Blank space, edit to install packages relevant for the current project.
 #  apt-get install -y &&\
-# Setup OS Preferences
-  ln -s /bin/doas /usr/local/bin/sudo &&\
-  echo '#Allow "sudo" group:\npermit :sudo\npermit persist :sudo' > "/etc/doas.conf" &&\
-  chmod 600 "/etc/doas.conf" &&\
+# Setup OS preferences
+  curl --output "/root/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
+  curl --output "/root/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
+  echo -e '\nPROMPT="${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(!.red.green)}%n@%m%b%F{%(!.green.cyan)}-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(!.green.cyan)}]%F{reset}%# "' >> "/root/.zshrc" &&\
 # Configure work directory
+  usermod --shell "/bin/zsh" ubuntu &&\
   passwd --delete --expire ubuntu &&\
+  cp /root/.z* /home/ubuntu/ &&\
+  chown ubuntu /home/ubuntu/.z* &&\
   chown ubuntu "/home/shared" &&\
   usermod --shell "/sbin/nologin" --lock root
 
-CMD ["/bin/bash"]
+CMD ["/bin/zsh"]
