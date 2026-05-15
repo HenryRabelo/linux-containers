@@ -3,6 +3,7 @@ LABEL name="Ubuntu Coding Environment" created-by="Henry Rabelo"
 VOLUME "/home/shared"
 WORKDIR "/home/shared"
 
+ SHELL ["/bin/bash", "-c"]
 # Enable APT SecComp Sandbox
  RUN echo 'APT::Sandbox::Seccomp "true";' > '/etc/apt/apt.conf.d/40sandbox' &&\
 # System update & upgrade
@@ -18,7 +19,7 @@ WORKDIR "/home/shared"
 # Setup OS preferences
   curl --output "/root/.zshrc" "https://gitlab.com/kalilinux/packages/kali-defaults/-/raw/kali/master/etc/skel/.zshrc" &&\
   curl --output "/root/.zprofile" "https://src.fedoraproject.org/rpms/zsh/raw/rawhide/f/dotzprofile" &&\
-  echo -e '\nPROMPT="${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(!.red.green)}%n@%m%b%F{%(!.green.cyan)}-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(!.green.cyan)}]%F{reset}%# "' >> "/root/.zshrc" &&\
+  printf "%b" '\n''PROMPT="${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(!.red.green)}%n@%m%b%F{%(!.green.cyan)}-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(!.green.cyan)}]%F{reset}%# "''\n' >> "/root/.zshrc" &&\
 # Configure work directory
   usermod --shell "/bin/zsh" ubuntu &&\
   passwd --delete --expire ubuntu &&\
